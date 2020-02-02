@@ -18,4 +18,4 @@ def translate_yandex(text):
     r = requests.post(URL, data={'key': KEY, 'text': TEXT, 'lang': LANG})
     return r.text[r.text.find('['):-1]
  
-print(translate_yandex(input(':>')))
+#print(translate_yandex(input('Input word:>')))
