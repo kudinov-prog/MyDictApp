@@ -16,6 +16,9 @@ def translate_yandex(text):
     LANG = ru_en(text)
  
     r = requests.post(URL, data={'key': KEY, 'text': TEXT, 'lang': LANG})
-    return r.text[r.text.find('['):-1]
+    s = r.text[r.text.find('['):-1]
+    table = str.maketrans("", "", '["]')
+    s = s.translate(table)
+    return s
  
 #print(translate_yandex(input('Input word:>')))
