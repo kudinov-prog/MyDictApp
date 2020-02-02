@@ -25,7 +25,7 @@ class Word():
     def deleteword(self):
         # удаляет слово из словаря
         self.sql = "SELECT * FROM albums WHERE en=?"
-        cursor.execute(self.sql, [('bird')])
+        cursor.execute(self.sql, [('hello')])
         print(cursor.fetchall())
 
 new = Word(input("input:"))
