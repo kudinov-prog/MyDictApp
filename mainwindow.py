@@ -3,9 +3,8 @@ from tkinter import *
 from translate import translate_yandex
 import sqlite3
 
-conn = sqlite3.connect("dict.db") # или :memory: чтобы сохранить в RAM
+conn = sqlite3.connect("dict.db")
 cursor = conn.cursor()
-
 
 class Word():
 
@@ -20,8 +19,6 @@ class Word():
         conn.commit()
 
     
-
-
 class Application(Frame):
 
     def __init__(self, master):
@@ -73,10 +70,14 @@ class Application(Frame):
         self.text_search.delete(0.0, END)
         self.text_search.insert(0.0, (curs))
 
-root = Tk()
-root.title("Main window")
-root.geometry("300x300")
+def main():
+    conn = sqlite3.connect("dict.db")
+    cursor = conn.cursor()
 
-app = Application(root)
+    root = Tk()
+    root.title("Main window")
+    root.geometry("300x300")
+    app = Application(root)
+    root.mainloop()
 
-root.mainloop()
+main()
