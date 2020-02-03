@@ -1,36 +1,22 @@
-import datetime
-from manage import translate_yandex
-import sqlite3
-
-conn = sqlite3.connect("dict.db") # или :memory: чтобы сохранить в RAM
-cursor = conn.cursor()
-#cursor.execute("""CREATE TABLE albums
-#                  (en text, ru text, date text)
-#               """)
-
-class Word():
-
-    def __init__(self, en):
-        self.en = en
-        self.ru = translate_yandex(en) # вызов функции переводчика и вставка слова
-        self.data = datetime.datetime.now()
-
-    def addword(self):
-        # добавляет слово в словарь (sql)
-        albums = [(self.en, self.ru, self.data)]
-        cursor.executemany("INSERT INTO albums VALUES (?, ?, ?)", albums)
-        conn.commit()
-
-
-    def deleteword(self):
-        # удаляет слово из словаря
-        self.sql = "SELECT * FROM albums WHERE en=?"
-        cursor.execute(self.sql, [('hello')])
-        print(cursor.fetchall())
-
-new = Word(input("input:"))
-new1 = Word(input("input:"))
-#new.addword()
-#new1.addword()
-new.deleteword()
-print(new.ru, new1.ru)
+import requests
+ 
+def ru_en(t):
+    en = [chr(i) for i in range(65, 123)]
+    for i in t[:5]:
+        if i in en:
+            return 'en-ru'
+        else:
+            return 'ru-en'
+ 
+def translate_yandex(text):
+    URL = 'https://translate.yandex.net/api/v1.5/tr.json/translate?'
+    KEY = 'trnsl.1.1.20160119T035517Z.50c6906978ef1961.08d0c5ada49017ed764c042723895ffab867be7a'
+    TEXT = text
+ 
+    LANG = ru_en(text)
+ 
+    r = requests.post(URL, data={'key': KEY, 'text': TEXT, 'lang': LANG})
+    s = r.text[r.text.find('['):-1]
+    table = str.maketrans("", "", '["]')
+    s = s.translate(table)
+    return s
