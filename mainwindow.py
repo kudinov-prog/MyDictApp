@@ -71,9 +71,6 @@ class Application(Frame):
         self.text_search.insert(0.0, (curs))
 
 def main():
-    conn = sqlite3.connect("dict.db")
-    cursor = conn.cursor()
-
     root = Tk()
     root.title("Main window")
     root.geometry("300x300")
